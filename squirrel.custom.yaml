@@ -1,0 +1,50 @@
+#-----------------#
+#    颜色使用说明   #
+#-----------------#
+# 我们平常一般用到的颜色都是 `RGB` 顺序的，如 `D1635D` 就是 `red: D1 | green: 63 | blue: 5D`
+# 而这里面用到的颜色可以有两种表达方式：
+# 一种是带透明度的 `ABGR` ，`A` 代码透明度，范围也是从 `00 - FF`，`00` 是透明 `FF` 是不透明；另一种是 `BGR`。
+# 那么上面这个颜色在这里面就可以写成 `0x5D63D1` `0xFF5D63D1`
+
+#-----------------#
+#     字体说明     #
+#-----------------#
+# 只要是你本地有的字体就可以，可以打开 FontBook.app 查看
+# 一般字体不需要指定，指定后的字体可能会出现候选框被拉伸成过高的情况，因为不同字体的纵向高度不同，默认字体适配最好
+
+patch:
+  style:
+    color_scheme_dark: roseo_maple_dark  # 暗黑模式下启用的皮肤
+  preset_color_schemes:
+    roseo_maple_dark:
+      name: "customized_color_scheme"
+      font_face: "STFangsong"
+      font_point: 24.0
+      label_font_face: "TimesNewRomanPSMT"
+      label_font_point: 22.0
+      comment_font_face: "TimesNewRomanPSMT"
+      comment_font_point: 22.0
+      candidate_list_layout: linear  # 横排（linear=线性横排，stacked=竖排）
+      text_orientation: horizontal
+      inline_preedit: true    # true编码显示在候选框外，false编码显示在候选框内
+      translucency: true
+      mutual_exclusive: true
+      corner_radius: 3.0
+      hilited_corner_radius: 3.0
+      surrounding_extra_expansion: 3.0
+      border_height: 1.0
+      border_width: 1.0
+      line_spacing: 1.0
+      spacing: 5.0
+      base_offset: 1.0
+      alpha: 5.0
+      shadow_size: 5.0
+      color_space: srgb
+      back_color: '0x222222'
+      hilited_back_color: '0x222222'
+      hilited_candidate_back_color: '0x0A8D00'
+      text_color: '0xBEDED7'
+      hilited_text_color: '0xFFCF9A'
+      candidate_text_color: '0xD8E3E6'
+      hilited_candidate_text_color: '0xF3F5F2'
+      comment_text_color: '0xDDEEE6'

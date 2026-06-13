@@ -1,0 +1,28 @@
+﻿# Rime dictionary
+# encoding: utf-8
+#
+# 个人扩展词库 - wubi986_user
+# 这里的词只是格式举例，可根据需要自行添加。
+#
+---
+name: wubi986_user      # 【重要】必须和文件名一致
+version: "1.0"
+sort: by_weight
+use_preset_vocabulary: false
+
+# 【关键修正】下面这行代码告诉Rime：第一列是编码，第二列是字
+columns:
+  - code                # 第一列：编码
+  - text                # 第二列：汉字
+  - weight              # 第三列：权重
+
+...
+aod	营业厅	5999
+aods	营业厅	9999
+arru	欧拉	9999
+vet	鼠须管	999
+vetp	鼠须管	9999
+idy	小狼毫	999
+idyp	小狼毫	9999
+kuu	中州韵	999
+kuuj	中州韵	9999

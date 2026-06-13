@@ -1,0 +1,136 @@
+# Rime schema
+# encoding: utf-8
+
+schema:
+  schema_id: wubi986
+  name: 986五笔
+  version: "21.141"
+  author:
+    - 吟枫舞墨,go2623
+  description: |
+    五笔986版
+  dependencies:
+    - pinyin_simp
+
+switches:
+  - name: ascii_mode
+    reset: 0
+    states: [ 中文, 西文 ]
+  - name: full_shape
+    states: [ 半角, 全角 ]
+  - name: extended_charset
+    states: [ 常用, 扩展 ]
+  - name: ascii_punct
+    states: [ 。，, ．， ]
+
+engine:
+  processors:
+    - ascii_composer
+    - recognizer
+    - key_binder
+    - speller
+    - punctuator
+    - selector
+    - navigator
+    - express_editor
+  segmentors:
+    - ascii_segmentor
+    - matcher
+    - abc_segmentor
+    - punct_segmentor
+    - fallback_segmentor
+  translators:
+    - punct_translator
+    - reverse_lookup_translator
+    - table_translator                   # 这是原来的系统翻译器
+    - history_translator@history
+  filters:               # <--- 建议加上这一段
+    - uniquifier         # 标准去重过滤器
+  
+speller:
+  alphabet: zyxwvutsrqponmlkjihgfedcba
+  delimiter: " ;'"
+  max_code_length: 4 # 最长4码
+  auto_select: false # 四码唯一上屏关闭，改为true开启
+
+translator:
+  dictionary: wubi986_extended  # 使用的词库名称
+  enable_user_dict: false  # 固定詞序
+  enable_completion: true # false关闭编码逐级提示,true开启编码逐级提示
+
+# 先输入`键再输入拼音可实现反查五笔编码
+reverse_lookup:
+  dictionary: pinyin_simp  # 拼音反查使用的词库
+  prefix: "`"
+  suffix: "'"
+  tips: 〔拼音〕
+  preedit_format:
+    - xform/([nl])v/$1ü/
+    - xform/([nl])ue/$1üe/
+    - xform/([jqxy])v/$1u/
+    
+punctuator:
+  import_preset: symbols
+  symbols:
+    # 这里可以自定义一些快捷输入，格式如下
+    "/pi": ["π"]
+    # 默认情况下大写数字是繁体，这里把“叄”和“陸”改成简体字，其它不用变
+    "/3": ["三", "叁", "₃", "³", "Ⅲ", "ⅲ", "③", "➂", "❸", "➌", "⓷", "⑶", "⒊", "３", "㊂", "㈢", "參", "参", "叁", "弎", "仨", "㆔"]
+    "/6": ["六", "陆", "₆", "⁶", "Ⅵ", "ⅵ", "⑥", "➅", "❻", "➏", "⓺", "⑹", "⒍", "６", "㊅", "㈥", "ↅ"]  
+  half_shape:
+    # 如果不喜欢下面的设定可以删除，或者在前面加“#”，就变成了默认设置
+    "/": ["/", "／", "÷"]  # 修改"/"键的默认设定
+    "@": "@"  # 修改为，"@"直接上屏
+    "#": "#"  # 修改为，"#"直接上屏"#"
+    "\\": "、"  # 修改为，"\"直接上屏顿号
+    "[": [ "【", "〔", "［", "〚", "〘","「"]
+    "]": [ "】", "〕", "］", "〛", "〙","」"]
+key_binder:
+#  import_preset: default    # 不导入默认设置
+# 下面的bindings，是在默认设置的基础上去掉了逗号和句号默认翻页的功能，
+# 这样可以使得句号上屏第一个字并且后面自动补一个句号
+# 如果不想要这个功能就把下面的#删除
+  bindings:
+    - {accept: "Control+p", send: Up, when: composing}
+    - {accept: "Control+n", send: Down, when: composing}
+    - {accept: "Control+b", send: Left, when: composing}
+    - {accept: "Control+f", send: Right, when: composing}
+    - {accept: "Control+a", send: Home, when: composing}
+    - {accept: "Control+e", send: End, when: composing}
+    - {accept: "Control+d", send: Delete, when: composing}
+    - {accept: "Control+k", send: "Shift+Delete", when: composing}
+    - {accept: "Control+h", send: BackSpace, when: composing}
+    - {accept: "Control+g", send: Escape, when: composing}
+    - {accept: "Control+bracketleft", send: Escape, when: composing}
+    - {accept: "Control+y", send: Page_Up, when: composing}
+    - {accept: "Alt+v", send: Page_Up, when: composing}
+    - {accept: "Control+v", send: Page_Down, when: composing}
+    - {accept: ISO_Left_Tab, send: "Shift+Left", when: composing}
+    - {accept: "Shift+Tab", send: "Shift+Left", when: composing}
+    - {accept: Tab, send: "Shift+Right", when: composing}
+    - {accept: minus, send: Page_Up, when: has_menu}
+    - {accept: equal, send: Page_Down, when: has_menu}
+#    - {accept: comma, send: Page_Up, when: paging}   # 去掉逗号翻页功能
+#    - {accept: period, send: Page_Down, when: has_menu}   # 去掉句号翻页功能
+    - {accept: "Control+Shift+1", select: .next, when: always}
+    - {accept: "Control+Shift+2", toggle: ascii_mode, when: always}
+    - {accept: "Control+Shift+3", toggle: full_shape, when: always}
+    - {accept: "Control+Shift+4", toggle: simplification, when: always}
+    - {accept: "Control+Shift+5", toggle: extended_charset, when: always}
+    - {accept: "Control+Shift+exclam", select: .next, when: always}
+    - {accept: "Control+Shift+at", toggle: ascii_mode, when: always}
+    - {accept: "Control+Shift+numbersign", toggle: full_shape, when: always}
+    - {accept: "Control+Shift+dollar", toggle: simplification, when: always}
+    - {accept: "Control+Shift+percent", toggle: extended_charset, when: always}
+    - {accept: semicolon, send: 2, when: has_menu}      # 分號次選
+    - {accept: apostrophe, send: 3, when: has_menu}     # 撇號三選
+recognizer:
+  import_preset: default
+  patterns:
+    punct: '^/([0-9]0?|[A-Za-z]+)$'
+    reverse_lookup: "`[a-z]*'?$"
+# Z键重复录入
+history:
+  input: z
+  size: 1
+  initial_quality: 9999

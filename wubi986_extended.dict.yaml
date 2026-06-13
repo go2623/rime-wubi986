@@ -1,0 +1,21 @@
+﻿# Rime dictionary
+# encoding: utf-8
+#
+# 总词库 - wubi986_extended
+#
+---
+name: wubi986_extended      # 【重要】必须和文件名一致
+version: "1.0"
+sort: by_weight
+use_preset_vocabulary: false
+
+columns:
+  - code                # 第一列：编码
+  - text                # 第二列：汉字
+  - weight              # 第三列：权重
+
+import_tables:
+# user词库放在前，这样当user词库中的词和主词库的词重复且权重相同时，优先显示user词库的词
+  - wubi986_user 
+  - wubi986
+...

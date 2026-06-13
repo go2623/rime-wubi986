@@ -1,0 +1,20 @@
+# default.custom.yaml
+# Rime default settings for MacOS Squirrel (鼠须管)
+# encoding: utf-8
+
+patch:
+  # 一、原有基础配置（保留你之前的设置，无修改）
+  schema_list:
+    - schema: wubi986  # 五笔986方案
+  # 候选词每页显示数量（设置的4个）
+  "menu/page_size": 4
+
+  # 中西文切换配置
+  ascii_composer:
+    good_old_caps_lock: true  # CapsLock切换中英
+    switch_key:
+      Caps_Lock: commit_code   # 按CapsLock上屏编码并切英文
+      Shift_L: commit_code     # 左Shift同上
+      Shift_R: commit_code     # 右Shift同上
+      Control_L: noop          # 左Ctrl不触发切换
+      Control_R: noop          # 右Ctrl不触发切换
